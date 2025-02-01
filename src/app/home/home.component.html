@@ -8,11 +8,9 @@
         </svg>
         <input
           id="name"
-          #nameCriterion
           placeholder="Ex: Leanne Graham"
           class="w-full rounded-lg border-none bg-gray-800 px-9 py-2.5 text-sm text-gray-200 placeholder-gray-500 shadow-sm ring-1 ring-gray-700 transition-all outline-none hover:ring-[#ffbd59]/50 focus:ring-2 focus:ring-[#ffbd59] focus:ring-offset-2 focus:ring-offset-[#1e272e]"
-          [value]="name()"
-          (input)="updateQueryParams('name', nameCriterion.value)"
+          [(ngModel)]="name"
         />
       </div>
     </div>
@@ -23,11 +21,9 @@
         </svg>
         <input
           id="company"
-          #companyCriterion
           placeholder="Ex: Romaguera-Crona"
           class="w-full rounded-lg border-none bg-gray-800 px-9 py-2.5 text-sm text-gray-200 placeholder-gray-500 shadow-sm ring-1 ring-gray-700 transition-all outline-none hover:ring-[#ffbd59]/50 focus:ring-2 focus:ring-[#ffbd59] focus:ring-offset-2 focus:ring-offset-[#1e272e]"
-          [value]="companyName()"
-          (input)="updateQueryParams('companyName', companyCriterion.value)"
+          [(ngModel)]="companyName"
         />
       </div>
     </div>

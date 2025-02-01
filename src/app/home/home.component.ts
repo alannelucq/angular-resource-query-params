@@ -1,27 +1,21 @@
-import { Component, computed, inject, input } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
+import { Component, computed, inject, model } from '@angular/core';
 import { rxResource, toObservable, toSignal } from "@angular/core/rxjs-interop";
 import { debounceTime } from "rxjs";
 import { UsersGateway } from "../users.gateway";
-
-export type UserSearch = {
-  name: string | null;
-  companyName: string | null;
-}
+import { FormsModule } from "@angular/forms";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
+  imports: [FormsModule],
   styleUrl: './home.component.scss'
 })
 export default class HomeComponent {
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
   private usersGateway = inject(UsersGateway);
 
-  name = input<string>('');
-  companyName = input<string>('');
-  private search = computed<UserSearch>(() => ({ name: this.name(), companyName: this.companyName() }));
+  name = model('');
+  companyName = model('');
+  private search = computed(() => ({ name: this.name(), companyName: this.companyName() }));
   private debouncedSearch = toSignal(toObservable(this.search).pipe(debounceTime(300)));
 
   usersResource = rxResource({
@@ -29,12 +23,4 @@ export default class HomeComponent {
     loader: ({request}) => this.usersGateway.searchUsers(request)
   })
   .asReadonly();
-
-  updateQueryParams(key: keyof UserSearch, value: string) {
-    void this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { [key]: value || null },
-      queryParamsHandling: 'merge'
-    });
-  }
 }

@@ -1,8 +1,8 @@
 import { inject, Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { delay, Observable } from "rxjs";
-import { UserSearch } from "./home/home.component";
-import { User } from "./user.model";
+import { User } from "./models/user.model";
+import { UserSearch } from "./models/user-search.model";
 
 @Injectable({ providedIn: 'root' })
 export class UsersGateway {
