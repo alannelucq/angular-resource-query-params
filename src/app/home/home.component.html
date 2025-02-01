@@ -1,0 +1,99 @@
+<div class="min-h-screen bg-[#1e272e] p-6">
+  <!-- Search Section -->
+  <div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+    <div class="relative">
+      <div class="relative">
+        <svg class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#ffbd59]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <input
+          id="name"
+          #nameCriterion
+          placeholder="Ex: Leanne Graham"
+          class="w-full rounded-lg border-none bg-gray-800 px-9 py-2.5 text-sm text-gray-200 placeholder-gray-500 shadow-sm ring-1 ring-gray-700 transition-all outline-none hover:ring-[#ffbd59]/50 focus:ring-2 focus:ring-[#ffbd59] focus:ring-offset-2 focus:ring-offset-[#1e272e]"
+          [value]="name()"
+          (input)="updateQueryParams('name', nameCriterion.value)"
+        />
+      </div>
+    </div>
+    <div class="relative">
+      <div class="relative">
+        <svg class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#ffbd59]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+        </svg>
+        <input
+          id="company"
+          #companyCriterion
+          placeholder="Ex: Romaguera-Crona"
+          class="w-full rounded-lg border-none bg-gray-800 px-9 py-2.5 text-sm text-gray-200 placeholder-gray-500 shadow-sm ring-1 ring-gray-700 transition-all outline-none hover:ring-[#ffbd59]/50 focus:ring-2 focus:ring-[#ffbd59] focus:ring-offset-2 focus:ring-offset-[#1e272e]"
+          [value]="companyName()"
+          (input)="updateQueryParams('companyName', companyCriterion.value)"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <div class="overflow-hidden rounded-xl bg-gray-800 shadow-xl ring-1 ring-gray-700">
+    <table class="min-w-full divide-y divide-gray-700/50">
+      <thead>
+        <tr class="bg-[#ffbd59]">
+          <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#1e272e]">Name</th>
+          <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#1e272e]">Email</th>
+          <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#1e272e]">Company</th>
+          <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#1e272e]">City</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-700/50">
+        @if (usersResource.isLoading()) {
+          @for (i of [1,2,3,4,5]; track i) {
+            <tr class="animate-pulse">
+              <td class="px-6 py-3">
+                <div>
+                  <div class="h-4 w-32 rounded bg-gray-700"></div>
+                  <div class="mt-1 h-3 w-24 rounded bg-gray-700/50"></div>
+                </div>
+              </td>
+              <td class="px-6 py-3">
+                <div class="h-4 w-48 rounded bg-gray-700"></div>
+              </td>
+              <td class="px-6 py-3">
+                <div class="h-4 w-40 rounded bg-gray-700"></div>
+              </td>
+              <td class="px-6 py-3">
+                <div class="h-5 w-20 rounded-full bg-gray-700"></div>
+              </td>
+            </tr>
+          }
+        } @else {
+          @for (user of usersResource.value(); track user.id) {
+            <tr class="group transition-all duration-200 hover:bg-gray-700/50">
+              <td class="px-6 py-3">
+                <div>
+                  <div class="text-sm font-medium text-gray-200">{{user.name}}</div>
+                  <div class="text-xs text-gray-400">{{user.username}}</div>
+                </div>
+              </td>
+              <td class="px-6 py-3">
+                <a
+                  href="mailto:{{user.email}}"
+                  class="text-sm text-gray-300 transition-colors duration-200 hover:text-[#ffbd59]"
+                >
+                  {{user.email}}
+                </a>
+              </td>
+              <td class="px-6 py-3">
+                <div class="text-sm text-gray-300">{{user.company.name}}</div>
+              </td>
+              <td class="px-6 py-3">
+                <div class="inline-flex rounded-full bg-[#ffbd59] px-2.5 py-0.5 text-xs font-medium text-[#1e272e]">
+                  {{user.address.city}}
+                </div>
+              </td>
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
